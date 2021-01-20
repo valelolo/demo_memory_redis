@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-app-deploy
+  labels:
+    name: webapp-app-deploy
+    app: demo-app-redis
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app-redis
+  template:
+    metadata:
+      name: webapp-pod
+      labels:
+        name: webapp-pod
+        app: demo-app-redis
+    spec:
+      containers:
+        - name: container-webapp
+          image: meiovale/webapp_forredis:1.0
+          ports:
+            - containerPort: 5000
